@@ -16,10 +16,10 @@ Clone the project on your local Execute npm install on the same path as of your 
 }
 
 ```
-Once you've added your db config as listed above, go to the src folder from your terminal and execute npx sequelize db:create and then execute npx sequelize db:migrate
+Once you've added your db config as listed above, go to the src folder from your terminal and execute ```npx sequelize db:create``` and then execute ```npx sequelize db:migrate```
 
 ### TABLES
 
-User Table 
+USER Table 
 ```npx sequelize model:generate --name User --attributes email:String,password:String```
 

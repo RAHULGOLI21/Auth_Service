@@ -2,6 +2,10 @@
 const {
   Model
 } = require('sequelize');
+const bcrypt = require('bcrypt');
+
+const { SALT } = require('../config/serverConfig');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -33,5 +37,12 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'User',
   });
+
+  // these are the TRIGGERS or we can call it as HOOK in sequelize : MUST READ :)
+  User.beforeCreate((user)=>{
+    const encryptedPassword = bcrypt.hashSync(user.password,SALT);
+    user.password = encryptedPassword;
+    console.log("encryptedPassword",encryptedPassword)
+  })
   return User;
 };
