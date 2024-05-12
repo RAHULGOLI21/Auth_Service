@@ -43,6 +43,27 @@ class UserService {
         }
     }
 
+    async isAuthenticated(token){
+        try {
+            const response = this.verifyToken(token);
+            if(!response){
+                throw { error: "Invalid token"}
+            }
+
+            // This is to useful when the user token is not  expired but the user may be deleted
+            // so it checks for the user even if the token is valid
+            const user = this.userRepository.getByEmail(response.email);
+            if(!user){
+                throw { error: "No user with corresponding token exists"}
+            }
+            return user.id;
+
+        } catch (error) {
+            console.log("Something went wrong in Auth process", error);
+            throw error;
+        }
+    }
+
     createToken(user) {
         try {
             const result = jwt.sign(user, JWT_KEY, { expiresIn: "1d" });
