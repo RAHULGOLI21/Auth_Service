@@ -24,8 +24,19 @@ class UserService {
 
     async signin(email, plainpassword) {
         try {
-            const user = this.userRepository.getByemail(email);
-            return user;
+            // step:1 -> fetch the user using the email
+            const user = await this.userRepository.getByEmail(email);
+            // step:2 -> check if the passwords match
+            const passwordMatch = this.checkPasswod(plainpassword,user.password);
+
+            if(!passwordMatch){
+                console.log("Password doesn't match");
+                throw { error: "Incorrect Password"}
+            }
+            
+            // step:3 -> if passwords match Create new JWT token and return it
+            const newJWT = this.createToken({email: user.email , password: user.password}); 
+            return newJWT 
         } catch (error) {
             console.log("Something went wrong in SignIn process");
             throw error;

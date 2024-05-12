@@ -1,4 +1,4 @@
-const { User } = require('../models/index');
+const { User } = require('../models/index')
 
 class UserRepository {
 
@@ -27,16 +27,16 @@ class UserRepository {
         }
     }
 
-    async getByemail(userEmail) {
+    async getByEmail(userEmail) {
         try {
-            const user = await User.findOne({
-                where: {
-                    email: userEmail
-                }
-            })
+            const user = User.findOne({ where :{
+                email : userEmail
+            }})
+            console.log("user in repo",user)
             return user;
         } catch (error) {
-
+            console.log("Something went wrong in repository layer");
+            throw error;
         }
     }
 
