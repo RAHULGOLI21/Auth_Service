@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsToMany(models.Role,{
         through : 'User_Roles'
+        // (1). you cant find any User_Role model file because this table is automatically created by sequelize 
+        // with keys id, userId, profileId, createdAt, updatedAt
+        // (2). You can also create yourself using models and other ways (.. refer doc) to add any additional columns
       })
     }
   }
